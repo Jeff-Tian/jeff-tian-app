@@ -27,7 +27,7 @@ jobs:
       - name: Build on local
         run: npm i -g eas-cli && eas build --platform android --local && ls
       - name: generate apk file
-        run: java -jar bundletool-all-1.10.0.jar build-apks --mode=universal --bundle=$(ls | grep "\.aab") --output=jeff-tian.apks&&java -jar bundletool-all-1.10.0.jar install-apks --apks=~/jeff-tian.apks&&ls
+        run: java -jar bundletool-all-1.10.0.jar build-apks --mode=universal --bundle=$(ls | grep "\.aab") --output=jeff-tian.apks&&java -jar bundletool-all-1.10.0.jar install-apks --apks=jeff-tian.apks&&ls
       - name: generate release key
         run: echo -n ${{secrets.MY_RELEASE_KEY}} | base64 --decode > my-release-key.jks && ls
       - name: zipalign
