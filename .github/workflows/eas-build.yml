@@ -22,7 +22,10 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: versioning
-        run: echo $(git rev-parse HEAD | cut -c 1-8) > version
+        run: |
+          echo $(grep -o '"version"&#58; "[^"]*"' package.json | grep -o '[^"]*' | sed -n '3 p')
+          echo $(date +"%Y-%m-%d-%H-%M-%S")
+          echo $(git rev-parse HEAD | cut -c 1-8) > version
 
       - name: Install android sdk
         run: sudo apt install android-sdk
