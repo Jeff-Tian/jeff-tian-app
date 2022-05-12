@@ -27,7 +27,7 @@ jobs:
           
           NEW_VERSION=$(cat version)
           CURRENT_VERSION=$(node -p "require('./package.json').version") 
-          sed -i '' "s/${CURRENT_VERSION}/${NEW_VERSION}/" package.json
+          sed "s/${CURRENT_VERSION}/${NEW_VERSION}/" package.json > package.json
           cat package.json
 
       - name: Install android sdk
