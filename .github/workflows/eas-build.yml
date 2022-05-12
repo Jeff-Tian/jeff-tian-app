@@ -36,6 +36,16 @@ jobs:
       - name: zipalign
         run: zipalign -v -p 4 universal.apk jeff-tian-unsigned-aligned.apk
       - name: sign apk
-        run: echo ${{ secrets.RELEASE_KEY_PASSWORD }} | apksigner sign --ks my-release-key.jks --out jeff-tian-release.apk jeff-tian-unsigned-aligned.apk
+        run: echo ${{ secrets.RELEASE_KEY_PASSWORD }} | apksigner sign --ks my-release-key.jks --out jeff-tian-release.apk jeff-tian-unsigned-aligned.apk && ls
+
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          cname: app.jeff-tian.inversify.cn
+
+
       - name: Build on EAS
         run: eas build --platform android --non-interactive
