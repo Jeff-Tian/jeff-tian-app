@@ -21,6 +21,9 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: versioning
+        run: echo $(git rev-parse HEAD | cut -c 1-8) > version
+
       - name: Install android sdk
         run: sudo apt install android-sdk
       - name: Install dependencies
@@ -38,6 +41,8 @@ jobs:
       - name: sign apk
         run: echo ${{ secrets.RELEASE_KEY_PASSWORD }} | apksigner sign --ks my-release-key.jks --out jeff-tian-release.apk jeff-tian-unsigned-aligned.apk && ls
 
+      - name: apk version
+        run: cp jeff-tian-release.apk jeff-tian-release-$(cat version).apk
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
