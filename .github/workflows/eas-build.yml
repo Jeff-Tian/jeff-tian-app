@@ -20,6 +20,9 @@ jobs:
           expo-version: 5.x
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install android sdk
+        run: sudo apt install android-sdk
       - name: Install dependencies
         run: npm ci
       - name: Install bundletool
@@ -30,8 +33,6 @@ jobs:
         run: java -jar bundletool-all-1.10.0.jar build-apks --mode=universal --bundle=$(ls | grep "\.aab") --output=jeff-tian.apks&&unzip jeff-tian.apks&&ls
       - name: generate release key
         run: echo -n "${{secrets.MY_RELEASE_KEY}}" | base64 --decode > my-release-key.jks && ls
-      - name: Install android sdk
-        run: apt install android-sdk
       - name: zipalign
         run: zipalign -v -p 4 universal.apk jeff-tian-unsigned-aligned.apk
       - name: sign apk
