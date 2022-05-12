@@ -24,6 +24,11 @@ jobs:
       - name: versioning
         run: |
           echo $(grep -o '"version".\s*"[^"]*"' package.json | grep -o '[^"]*' | sed -n '3 p')-$(date +"%Y-%m-%d-%H-%M-%S")-$(git rev-parse HEAD | cut -c 1-8) > version
+          
+          NEW_VERSION=$(cat version)
+          CURRENT_VERSION=$(node -p "require('./package.json').version") 
+          sed -i '' "s/${CURRENT_VERSION}/${NEW_VERSION}/" package.json
+          cat package.json
 
       - name: Install android sdk
         run: sudo apt install android-sdk
