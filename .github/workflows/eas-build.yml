@@ -50,6 +50,9 @@ jobs:
       - name: apk version
         run: cp jeff-tian-release.apk jeff-tian-$(cat version).apk
 
+      - name: static files
+        run: expo export --public-url https://app.jeff-tian.jiwai.win/dist
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
